@@ -1,0 +1,29 @@
+
+<%= link_to 'New booking', new_booking_path %>
+
+<h1>Listing Bookings</h1>
+
+<table>
+  <tr>
+    <th>Airline</th>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Flight Time</th>
+    <th>Ticket Time Limit</th>
+  </tr>
+
+  <% @bookings.each do |booking| %>
+    <tr>
+      <td><%= booking.airline %></td>
+      <td><%= booking.origin %></td>
+      <td><%= booking.destination %></td>
+      <td><%= booking.flight_time&.strftime('%c') %></td>
+      <td><%= booking.ticket_time_limit&.strftime('%c') %></td>
+      <td><%= link_to 'Show', booking_path(booking) %></td>
+      <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
+      <td><%= link_to 'Destroy', booking_path(booking),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

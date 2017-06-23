@@ -1,0 +1,113 @@
+<%= form_for(@booking) do |f| %>
+
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@booking.errors.count, "error") %> prohibited
+        this booking from being saved:
+      </h2>
+      <ul>
+        <% @booking.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-inline">
+    <div class="col-md-3 form-group">
+
+      <p>
+        <%= f.label :airline %><br>
+        <%= f.text_field :airline, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :flght_number %><br>
+        <%= f.text_field :flght_number, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :ticket_type %><br>
+        <%= f.text_field :ticket_type, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :bill_number %><br>
+        <%= f.text_field :bill_number, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :recipt_number %><br>
+        <%= f.text_field :recipt_number, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.submit %>
+      </p>
+      <%= link_to 'Back', bookings_path %>
+
+    </div>
+
+    <div class="col-md-3">
+      <p>
+        <%= f.label :origin %><br>
+        <%= f.text_field :origin, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :flight_time %><br>
+        <%= f.datetime_field :flight_time, class: 'form-control' %>
+        <span class="glyphicon glyphicon-calendar"></span>
+      </p>
+
+      <p>
+        <%= f.label :ticket_number %><br>
+        <%= f.text_field :ticket_number, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :currency %><br>
+        <%= f.text_field :currency, class: 'form-control' %>
+      </p>
+
+
+    </div>
+
+    <div class="col-md-3">
+
+      <p>
+        <%= f.label :destination %><br>
+        <%= f.text_field :destination, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :ticket_time_limit %><br>
+        <%= f.datetime_field :ticket_time_limit, class: 'form-control' %>
+        <span class="glyphicon glyphicon-calendar"></span>
+      </p>
+
+      <p>
+        <%= f.label :pnr %><br>
+        <%= f.text_field :pnr, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :amount %><br>
+        <%= f.text_field :amount, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :notes %><br>
+        <%= f.text_area :notes, class: 'form-control' %>
+      </p>
+
+    </div>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+      $('#datetimepicker1').datetimepicker();
+  });
+</script>

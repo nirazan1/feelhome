@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  airline: one
+  notes: MyText
+  flght_number: MyString
+  flight_time: 2017-06-23 20:32:07
+  pnr: MyString
+  ticket_number: MyString
+  ticket_time_limit: 2017-06-23 20:32:07
+  bill_number: 1
+  currency: MyString
+  amount: 1
+  recipt_number: 1
+  ticket_type: MyString
+
+two:
+  airline: two
+  notes: MyText
+  flght_number: MyString
+  flight_time: 2017-06-23 20:32:07
+  pnr: MyString
+  ticket_number: MyString
+  ticket_time_limit: 2017-06-23 20:32:07
+  bill_number: 1
+  currency: MyString
+  amount: 1
+  recipt_number: 1
+  ticket_type: MyString
