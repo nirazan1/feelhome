@@ -28,7 +28,7 @@
 
       <p>
         <%= f.label :ticket_type %><br>
-        <%= f.text_field :ticket_type, class: 'form-control' %>
+        <%= f.select :ticket_type, [['International', 'International'], ['Domestic', 'Domestic']] %>
       </p>
 
       <p>
@@ -67,7 +67,7 @@
 
       <p>
         <%= f.label :currency %><br>
-        <%= f.text_field :currency, class: 'form-control' %>
+        <%= f.select :currency, [['USD', 'USD'], ['NRP', 'NRP']] %>
       </p>
 
 
