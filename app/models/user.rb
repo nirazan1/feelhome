@@ -3,4 +3,19 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  validates :name, presence: true,
+            length: { minimum: 5 }
+  validates :contact_number, presence: true,
+            length: { minimum: 7 }, numericality: true,
+            acceptance: { message: 'must be telephone number'}
+
+  has_many :user_bookings, :class_name => 'Booking', :foreign_key => 'user_id'
+  has_many :agent_bookings, :class_name => 'Booking', :foreign_key => 'agent_id'
+
+
+
+  def admin?
+    false
+  end
 end

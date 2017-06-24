@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Feelhome"
+  config.site_title = "FeelHome Travels And Tours"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -43,6 +43,24 @@ ActiveAdmin.setup do |config|
   #     admin.site_title = "Custom Admin Title"
   #   end
   #
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: "Home", url: "/", priority: 1
+
+      menu.add label: "Sites", priority: 6 do |sites|
+        sites.add label: "Google",
+                  url: "http://google.com",
+                  html_options: { target: :blank },
+                  priority: 1
+
+        sites.add label: "Facebook",
+                  url: "http://facebook.com",
+                  html_options: { target: :blank },
+                  priority: 0
+      end
+    end
+  end
+
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
 
@@ -119,7 +137,7 @@ ActiveAdmin.setup do |config|
   # This allows your users to comment on any resource registered with Active Admin.
   #
   # You can completely disable comments:
-  # config.comments = false
+  config.comments = false
   #
   # You can change the name under which comments are registered:
   # config.comments_registration_name = 'AdminComment'
