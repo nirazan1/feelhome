@@ -13,17 +13,41 @@
       </ul>
     </div>
   <% end %>
-  <div class="form-inline">
-    <div class="col-md-3 form-group">
 
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>
+            <%= f.label :select_existing_user %><br>
+            <%= f.collection_select :user_id, User.where(customer: true), :id, :name, {:include_blank => true, :default => nil}, {class: "form-control"} %>
+          </p>
+          <strong>OR Create New User</strong>
+            <%= render 'new_user' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 form-group">
       <p>
         <%= f.label :airline %><br>
         <%= f.text_field :airline, class: 'form-control' %>
       </p>
 
       <p>
-        <%= f.label :flght_number %><br>
-        <%= f.text_field :flght_number, class: 'form-control' %>
+        <%= f.label :origin %><br>
+        <%= f.text_field :origin, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :ticket_number %><br>
+        <%= f.text_field :ticket_number, class: 'form-control' %>
+      </p>
+
+      <p>
+        <span class="glyphicon glyphicon-calendar"></span>
+        <%= f.label :flight_time %><br>
+        <%= f.datetime_field :flight_time, class: 'form-control' %>
       </p>
 
       <p>
@@ -45,30 +69,9 @@
 
     <div class="col-md-3">
       <p>
-        <%= f.label :origin %><br>
-        <%= f.text_field :origin, class: 'form-control' %>
+        <%= f.label :flght_number %><br>
+        <%= f.text_field :flght_number, class: 'form-control' %>
       </p>
-
-      <p>
-        <%= f.label :flight_time %><br>
-        <%= f.datetime_field :flight_time, class: 'form-control' %>
-        <span class="glyphicon glyphicon-calendar"></span>
-      </p>
-
-      <p>
-        <%= f.label :ticket_number %><br>
-        <%= f.text_field :ticket_number, class: 'form-control' %>
-      </p>
-
-      <p>
-        <%= f.label :currency %><br>
-        <%= f.select :currency, [['USD', 'USD'], ['NRP', 'NRP']] %>
-      </p>
-
-
-    </div>
-
-    <div class="col-md-3">
 
       <p>
         <%= f.label :destination %><br>
@@ -76,14 +79,19 @@
       </p>
 
       <p>
-        <%= f.label :ticket_time_limit %><br>
-        <%= f.datetime_field :ticket_time_limit, class: 'form-control' %>
-        <span class="glyphicon glyphicon-calendar"></span>
+        <%= f.label :pnr %><br>
+        <%= f.text_field :pnr, class: 'form-control' %>
       </p>
 
       <p>
-        <%= f.label :pnr %><br>
-        <%= f.text_field :pnr, class: 'form-control' %>
+        <span class="glyphicon glyphicon-calendar"></span>
+        <%= f.label :ticket_time_limit %><br>
+        <%= f.datetime_field :ticket_time_limit, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :currency %><br>
+        <%= f.select :currency, [['USD', 'USD'], ['NRP', 'NRP']] %>
       </p>
 
       <p>
@@ -98,9 +106,12 @@
 
     </div>
 
+  </div>
+
+  <div class="form-inline">
     <div class="col-md-8">
       <p>
-        <%= f.submit "Create", class: "btn btn-sm btn-primary" %>
+        <%= f.submit "Create Booking", class: "btn btn-success" %>
       </p>
       <%= link_to 'Back', bookings_path %>
     </div>

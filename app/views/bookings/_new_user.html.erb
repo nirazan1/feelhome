@@ -1,0 +1,39 @@
+<%= form_for(@new_user, url: new_booking_path) do |f| %>
+
+  <% if @new_user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@new_user.errors.count, "error") %> prohibited
+        this new_user from being saved:
+      </h2>
+      <ul>
+        <% @new_user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <form class="form-inline">
+    <div class="form-group">
+      <%= f.label :name, 'Full Name' %>
+      <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :contact_number %>
+      <%= f.telephone_field :contact_number, autofocus: true, class: 'form-control'%>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, class: 'form-control', type:'email' %>
+    </div>
+  </form>
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+      $('#datetimepicker1').datetimepicker();
+  });
+</script>
