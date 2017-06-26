@@ -16,4 +16,8 @@ class User < ApplicationRecord
     User.find_by(email: 'admin@feelhometravels.com')
   end
 
+  def name_email
+    "#{name} [ #{email} ]"
+  end
+
 end

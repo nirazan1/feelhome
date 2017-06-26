@@ -17,7 +17,6 @@
     <th>PNR</th>
     <th>Ticket Number</th>
     <th>Bill #</th>
-    <th>Currency</th>
     <th>Amount</th>
     <th>Receipt #</th>
     <th>Ticket Type</th>
@@ -26,20 +25,19 @@
 
   <% @bookings.each do |booking| %>
     <tr>
-      <td><%= booking.created_at&.strftime('%c') %></td>
+      <td><%= booking.created_at&.strftime('%A, %d %b %Y %l:%M %p') %></td>
       <td><%= booking.agent&.name %></td>
       <td><%= booking.user&.name %></td>
       <td><%= booking.airline %></td>
       <td><%= booking.origin %></td>
       <td><%= booking.destination %></td>
-      <td><%= booking.flight_time&.strftime('%c') %></td>
-      <td><%= booking.ticket_time_limit&.strftime('%c') %></td>
+      <td><%= booking.flight_time&.strftime('%A, %d %b %Y %l:%M %p') %></td>
+      <td><%= booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p') %></td>
       <td><%= booking.flght_number %></td>
       <td><%= booking.pnr %></td>
       <td><%= booking.ticket_number %></td>
       <td><%= booking.bill_number %></td>
-      <td><%= booking.currency %></td>
-      <td><%= booking.amount %></td>
+      <td><%= "#{booking.currency} #{booking.amount}" %></td>
       <td><%= booking.recipt_number %></td>
       <td><%= booking.ticket_type %></td>
       <td><%= booking.notes %></td>

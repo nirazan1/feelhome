@@ -1,7 +1,7 @@
 <div class="col-md-4 col-md-offset-2">
   <p>
     <strong>Booked At:</strong>
-    <%= @booking.created_at.strftime('%c') %>
+    <%= @booking.created_at.strftime('%A, %d %b %Y %l:%M %p') %>
   </p>
 
   <p>
@@ -56,13 +56,13 @@
 
   <p>
     <strong>flight_time</strong>
-    <%= @booking.flight_time&.strftime('%c')%>
+    <%= @booking.flight_time&.strftime('%A, %d %b %Y %l:%M %p')%>
   </p>
 
 
   <p>
     <strong>ticket_time_limit</strong>
-    <%= @booking.ticket_time_limit&.strftime('%c')%>
+    <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p')%>
   </p>
 
   <p>
