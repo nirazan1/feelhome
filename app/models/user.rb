@@ -21,7 +21,8 @@ class User < ApplicationRecord
   end
 
   def admin?
-    admin == true
+    binding.pry
+    self.admin == true
   end
 
 end
