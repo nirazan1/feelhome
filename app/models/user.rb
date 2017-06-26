@@ -20,4 +20,8 @@ class User < ApplicationRecord
     "#{name} [ #{email} ]"
   end
 
+  def admin?
+    admin == true
+  end
+
 end
