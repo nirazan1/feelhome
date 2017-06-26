@@ -19,9 +19,4 @@ class User < ApplicationRecord
   def name_email
     "#{name} [ #{email} ]"
   end
-
-  def admin?
-    self.admin == true
-  end
-
 end
