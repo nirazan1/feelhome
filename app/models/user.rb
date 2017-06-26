@@ -19,4 +19,9 @@ class User < ApplicationRecord
   def name_email
     "#{name} [ #{email} ]"
   end
+
+  private
+  def password_required?
+    new_record? ? super : false
+  end
 end

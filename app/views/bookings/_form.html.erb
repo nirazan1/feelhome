@@ -15,18 +15,20 @@
   <% end %>
 
   <div class="row">
-    <div class="col-md-4">
-      <div class="panel panel-info">
-        <div class="panel-body">
-          <p>
-            <%= f.label :select_existing_user %><br>
-            <%= f.collection_select :user_id, User.where(customer: true), :id, :name_email, {:include_blank => true, :default => nil}, {class: "form-control"} %>
-          </p>
-          <strong>OR Create New User</strong>
-            <%= render 'new_user' %>
+    <% unless current_user.customer %>
+      <div class="col-md-4">
+        <div class="panel panel-info">
+          <div class="panel-body">
+            <p>
+              <%= f.label :select_existing_user %><br>
+              <%= f.collection_select :user_id, User.where(customer: true), :id, :name_email, {:include_blank => true, :default => nil}, {class: "form-control"} %>
+            </p>
+            <strong>OR Create New User</strong>
+              <%= render 'new_user' %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="col-md-3 form-group">
       <p>
