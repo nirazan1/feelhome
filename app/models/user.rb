@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def name_email
-    "#{name} [ #{email} ]"
+    "#{name} [ ☎#{contact_number} ]"
   end
 
   private

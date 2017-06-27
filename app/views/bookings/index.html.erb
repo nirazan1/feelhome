@@ -42,10 +42,10 @@
   </tr>
 
   <% @bookings.each do |booking| %>
-    <tr>
+    <tr class="<%= booking.status %>" onclick="location.href='bookings/<%=booking.id%>'">
       <td><%= booking.created_at&.strftime('%A, %d %b %Y %l:%M %p') %></td>
       <td><%= booking.agent&.name %></td>
-      <td><%= booking.user&.name %></td>
+      <td><%= "#{booking.user&.name} (☎#{booking.user&.contact_number})" %></td>
       <td><%= booking.airline %></td>
       <td><%= booking.origin %></td>
       <td><%= booking.destination %></td>
@@ -58,7 +58,7 @@
       <td><%= "#{booking.currency} #{booking.amount}" %></td>
       <td><%= booking.recipt_number %></td>
       <td><%= booking.ticket_type %></td>
-      <td><%= booking.notes %></td>
+      <td><%= truncate(booking.notes) %></td>
       <td><%= link_to 'Show', booking_path(booking) %></td>
       <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
       <!-- <td><%= link_to 'Delete', booking_path(booking),
@@ -67,3 +67,18 @@
     </tr>
   <% end %>
 </table>
+
+
+<style>
+.upcoming {
+  background-color: lightpink;
+  cursor:pointer;
+}
+.overdue {
+  background-color: red;
+  cursor:pointer;
+}
+.normal {
+  cursor:pointer;
+}
+</style>

@@ -12,6 +12,9 @@
   <p>
     <strong>Customer:</strong>
     <%= @booking.user&.name %>
+    <p>
+      <%= "☎#{@booking.user&.contact_number} 📧 #{@booking.user&.email}"%>
+    </p>
   </p>
 
   <p>
