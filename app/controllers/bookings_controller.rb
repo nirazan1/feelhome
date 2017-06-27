@@ -2,7 +2,29 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @bookings = Booking.all
+    @bookings = if current_user.customer?
+                  if params[:tab] == 'completed_bookings'
+                    current_user.user_bookings.completed
+                  elsif params[:tab] == 'all_bookings'
+                    current_user.user_bookings
+                  else
+                    current_user.user_bookings.pending
+                  end
+                elsif current_user.agent?
+                  if params[:tab] == 'completed_bookings'
+                    current_user.agent_bookings.completed
+                  elsif params[:tab] == 'all_pending_bookings'
+                    Booking.all.pending
+                  elsif params[:tab] == 'all_completed_bookings'
+                    Booking.all.completed
+                  elsif params[:tab] == 'all_bookings'
+                    Booking.all
+                  else
+                    current_user.agent_bookings.pending
+                  end
+                else
+                  Booking.all
+                end
   end
 
   def edit

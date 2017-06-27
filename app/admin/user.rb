@@ -22,4 +22,17 @@ permit_params :name, :contact_number, :email, :encrypted_password, :agent, :admi
   end
 
 
+  form do |f|
+    f.inputs "User Details" do
+      f.input :name
+      f.input :email
+      f.input :contact_number
+      f.input :admin
+      f.input :agent
+      f.input :customer
+    end
+    f.actions
+  end
+
+
 end

@@ -1,7 +1,25 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-2">
+    <h3>Ticket Booking System</h3>
+    <ul class="nav nav-tabs">
+      <li role="presentation"><%= link_to 'Pending Bookings', bookings_path(tab: 'pending_bookings') %></li>
+      <li role="presentation"><%= link_to 'Completed Bookings', bookings_path(tab: 'completed_bookings') %></li>
+      <li role="presentation"><%= link_to 'All Bookings', bookings_path(tab: 'all_bookings') %></li>
+      <% if current_user.agent? %>
+        <li role="presentation"><%= link_to 'All Pending Bookings', bookings_path(tab: 'all_pending_bookings') %></li>
+        <li role="presentation"><%= link_to 'All Completed Bookings', bookings_path(tab: 'all_completed_bookings') %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
-<%= link_to 'New booking', new_booking_path %>
 
-<h1>Listing Bookings</h1>
+</br>
+<%= link_to 'Create New booking', new_booking_path %>
+
+
+
+<h1><%= params[:tab]&.humanize %></h1>
 
 <table class="table table-bordered table-hover table-striped">
   <tr>
