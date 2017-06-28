@@ -1,0 +1,7 @@
+Hello <%= @customer.name.capitalize %> !
+
+Your booking needs to be finalized by <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p') %>
+
+Please follow up on the booking ASAP !
+
+Booking Info: <%= "https://feelhometravels.herokuapp.com/bookings/#{@booking.id}" %>

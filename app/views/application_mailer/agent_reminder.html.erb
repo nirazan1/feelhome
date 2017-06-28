@@ -1,0 +1,7 @@
+Hello <%= @agent.name.capitalize %> !
+
+<%= @booking.user.name.capitalize %>'s booking is about to expire. <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p') %>
+
+Follow up on the booking ASAP !
+
+Booking Info: <%= "https://feelhometravels.herokuapp.com/bookings/#{@booking.id}" %>
