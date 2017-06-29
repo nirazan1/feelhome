@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'info@nirazan.com.np'
+  default from: 'admin@feelhometravels.com'
 
   def agent_reminder(booking)
     @booking = booking
