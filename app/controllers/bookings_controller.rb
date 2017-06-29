@@ -1,5 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: :search
 
   def index
     @bookings = if current_user.customer?
@@ -89,6 +90,51 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     redirect_to bookings_path
+  end
+
+  def search
+    @response = HTTParty.post("https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyBjVK8xezhFNYx-aJSRJiPIJi8ecMqNKpY",
+      {
+        :body => search_body.to_json,
+        :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
+      })
+    if @response.success?
+      @response["trips"]["tripOption"]
+    else
+      redirect_to new_user_session_path, alert: @response["error"]
+
+      # render :json => { :errors => @response["error"] }
+    end
+  end
+
+  def search_body
+    tck_class = params["trip_class"] == "1" ? "BUSINESS" : ""
+    body =  {
+              "request": {
+                "slice": [
+                  {
+                    "origin": params["origin_iata"],
+                    "destination": params["destination_iata"],
+                    "date": params["depart_date"],
+                    "preferredCabin": tck_class
+                  }
+                ],
+                "passengers": {
+                  "adultCount": params["adults"],
+                  "infantInSeatCount": params["infants"],
+                  "childCount": params["children"],
+                  "seniorCount": 0
+                },
+                "solutions": 2
+              }
+            }
+    body[:request][:slice] << {
+              "origin": params["destination_iata"],
+              "destination": params["origin_iata"],
+              "date": params["return_date"],
+              "preferredCabin": tck_class
+            } if params[:return_date].present?
+    body
   end
 
   private
