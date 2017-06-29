@@ -102,9 +102,13 @@ class BookingsController < ApplicationController
       @response["trips"]["tripOption"]
     else
       redirect_to new_user_session_path, alert: @response["error"]
-
       # render :json => { :errors => @response["error"] }
     end
+  end
+
+
+  def quote_request
+
   end
 
   def search_body
@@ -125,7 +129,7 @@ class BookingsController < ApplicationController
                   "childCount": params["children"],
                   "seniorCount": 0
                 },
-                "solutions": 2
+                "solutions": 10
               }
             }
     body[:request][:slice] << {

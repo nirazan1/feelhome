@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :agent_bookings, :class_name => 'Booking', :foreign_key => 'agent_id'
 
   def self.default_agent
-    User.find_by(email: 'admin@feelhometravels.com')
+    User.first
   end
 
   def name_email

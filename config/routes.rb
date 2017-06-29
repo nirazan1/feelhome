@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :users, :only => [:show]
   root 'bookings#index'
   get 'booking/search' => 'bookings#search'
+  get 'quote_request' => 'bookings#quote_request'
 
   resources :bookings
 end

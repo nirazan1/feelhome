@@ -13,4 +13,11 @@ class ApplicationMailer < ActionMailer::Base
     mail(:to => @customer.email, :subject => "FeelHomeTravels :: Expiring Booking Reminder !") if @customer&.email
   end
 
+  def quote_request(request, customer)
+    @agent = User.first
+    @request = request
+    @customer = customer
+    mail(:to => @agent, :subject => "FeelHomeTravels :: New Quote Requested! ")
+  end
+
 end
