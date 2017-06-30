@@ -17,17 +17,17 @@
   <form class="form-inline">
     <div class="form-group">
       <%= f.label :name, 'Full Name' %>
-      <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+      <%= f.text_field :name, class: 'form-control' %>
     </div>
 
     <div class="form-group">
       <%= f.label :contact_number %>
-      <%= f.telephone_field :contact_number, autofocus: true, class: 'form-control'%>
+      <%= f.telephone_field :contact_number, class: 'form-control'%>
     </div>
 
     <div class="form-group">
       <%= f.label :email %>
-      <%= f.email_field :email, autofocus: true, class: 'form-control', type:'email' %>
+      <%= f.email_field :email, class: 'form-control', type:'email' %>
     </div>
   </form>
 <% end %>
