@@ -99,7 +99,7 @@ class BookingsController < ApplicationController
         :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
       })
     if @response.success?
-      @response["trips"]["tripOption"]
+      @response = @response["trips"]["tripOption"]
     else
       redirect_to new_user_session_path, alert: @response["error"]
       # render :json => { :errors => @response["error"] }
