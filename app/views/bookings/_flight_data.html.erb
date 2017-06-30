@@ -1,0 +1,44 @@
+<div class="col-md-8 col-md-offset-1">
+  <div class="row">
+    <p>
+      <strong>Customer:</strong>
+      <%= @booking.user&.name %>
+      <p>
+        <%= "☎#{@booking.user&.contact_number} 📧 #{@booking.user&.email}"%>
+      </p>
+    </p>
+    <p class="col-md-3">
+      <strong>Cost: <%= @booking.flight_data["saleTotal"] %></strong>
+    </p>
+    <strong>Flight Info:</strong>
+    <% @booking.flight_data["slice"].each do |s| %>
+      <div class="col-md-12 col-md-offset-1">
+        <p>Total Duration: <%= formatted_duration(s["duration"]) %></p>
+      </div>
+      <% s["segment"].each do |sg| %>
+        <div class="col-md-12 col-md-offset-2">
+          <% sg["leg"].each do |l| %>
+            <div class="col-md-6">
+              <p>Flight: <%= "#{sg["flight"]["carrier"]} #{sg["flight"]["number"]}" %></p>
+              <p> Origin: <%= l["origin"] %> </p>
+              <p> Departure Time: <%= l["departureTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
+              <p> Origin Terminal: <%= l["originTerminal"] %> </p>
+              <p> Duration: <%= formatted_duration(l["duration"]) %> </p>
+            </div>
+            <div class="col-md-6">
+              <p> Aircraft: <%= l["aircraft"] %> </p>
+              <p> Destination: <%= l["destination"] %> </p>
+              <p> Arrival Time: <%= l["arrivalTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
+              <p> Destination Terminal: <%= l["destinationTerminal"] %> </p>
+            </div>
+          <% end %>
+          <% if sg["connectionDuration"].to_i > 0 %>
+            <p>Transit Duration: <%= formatted_duration(sg["connectionDuration"])%></p>
+          <% end %>
+          <hr></hr>
+        </div>
+      <% end %>
+    <% end %>
+    <hr></hr>
+  </div>
+</div>
