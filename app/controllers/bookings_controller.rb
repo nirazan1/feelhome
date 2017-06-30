@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: :search
+  skip_before_action :authenticate_user!, only: [:search, :set_flight]
 
   def index
     @bookings = if current_user.customer?
@@ -43,7 +43,7 @@ class BookingsController < ApplicationController
   end
 
   def create
-    @new_user = User.new(user_params)
+    @new_user = User.new(user_params) if params[:user]
     @booking = Booking.new(booking_params)
     if current_user.agent?
       @booking.update_attributes(agent: current_user)
@@ -92,16 +92,22 @@ class BookingsController < ApplicationController
     redirect_to bookings_path
   end
 
+  def set_flight
+    session[:flight_number] = params[:flight_number].to_i
+    render json: {}
+  end
+
   def search
+    @user = User.new
     @response = HTTParty.post("https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyBjVK8xezhFNYx-aJSRJiPIJi8ecMqNKpY",
       {
         :body => search_body.to_json,
         :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
-      })
-    if @response.success?
+      }) if Rails.env.production?
+    if @response&.success?
       @response = @response["trips"]["tripOption"]
     else
-      redirect_to new_user_session_path, alert: @response["error"]
+      redirect_to new_user_session_path, alert: @response&["error"] || '404 not found !'
       # render :json => { :errors => @response["error"] }
     end
   end
