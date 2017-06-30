@@ -1,3 +1,8 @@
 <h1>Edit booking</h1>
-
+<div class="col-md-8">
   <%= render 'form' %>
+</div>
+
+<div class="col-md-4">
+  <%= render 'flight_data' if @booking.flight_data %>
+</div>
