@@ -1,100 +1,104 @@
-<div class="col-md-4 col-md-offset-2">
-  <p>
-    <strong>Booked At:</strong>
-    <%= @booking.created_at.strftime('%A, %d %b %Y %l:%M %p') %>
-  </p>
-
-  <p>
-    <strong>Agent:</strong>
-    <%= @booking.agent&.name %>
-  </p>
-
-  <p>
-    <strong>Customer:</strong>
-    <%= @booking.user&.name %>
+<% if @booking.flight_data %>
+  <%= render 'flight_data' %>
+<% else %>
+  <div class="col-md-4 col-md-offset-2">
     <p>
-      <%= "☎#{@booking.user&.contact_number} 📧 #{@booking.user&.email}"%>
+      <strong>Booked At:</strong>
+      <%= @booking.created_at.strftime('%A, %d %b %Y %l:%M %p') %>
     </p>
-  </p>
 
-  <p>
-    <strong>Airline:</strong>
-    <%= @booking.airline %>
-  </p>
+    <p>
+      <strong>Agent:</strong>
+      <%= @booking.agent&.name %>
+    </p>
 
-  <p>
-    <strong>Origin:</strong>
-    <%= @booking.origin %>
-  </p>
+    <p>
+      <strong>Customer:</strong>
+      <%= @booking.user&.name %>
+      <p>
+        <%= "☎#{@booking.user&.contact_number} 📧 #{@booking.user&.email}"%>
+      </p>
+    </p>
 
-  <p>
-    <strong>destination</strong>
-    <%= @booking.destination%>
-  </p>
+    <p>
+      <strong>Airline:</strong>
+      <%= @booking.airline %>
+    </p>
 
-  <p>
-    <strong>flght_number</strong>
-    <%= @booking.flght_number%>
-  </p>
+    <p>
+      <strong>Origin:</strong>
+      <%= @booking.origin %>
+    </p>
 
-  <p>
-    <strong>pnr</strong>
-    <%= @booking.pnr%>
-  </p>
+    <p>
+      <strong>destination</strong>
+      <%= @booking.destination%>
+    </p>
 
-  <p>
-    <strong>notes</strong>
-    <%= @booking.notes%>
-  </p>
+    <p>
+      <strong>flght_number</strong>
+      <%= @booking.flght_number%>
+    </p>
 
-</div>
+    <p>
+      <strong>pnr</strong>
+      <%= @booking.pnr%>
+    </p>
 
-<div class="col-md-4">
+    <p>
+      <strong>notes</strong>
+      <%= @booking.notes%>
+    </p>
+
+  </div>
+
+  <div class="col-md-4">
 
 
-  <p>
-    <strong>ticket_number</strong>
-    <%= @booking.ticket_number%>
-  </p>
+    <p>
+      <strong>ticket_number</strong>
+      <%= @booking.ticket_number%>
+    </p>
 
-  <p>
-    <strong>flight_time</strong>
-    <%= @booking.flight_time&.strftime('%A, %d %b %Y %l:%M %p')%>
-  </p>
+    <p>
+      <strong>flight_time</strong>
+      <%= @booking.flight_time&.strftime('%A, %d %b %Y %l:%M %p')%>
+    </p>
 
 
-  <p>
-    <strong>ticket_time_limit</strong>
-    <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p')%>
-  </p>
+    <p>
+      <strong>ticket_time_limit</strong>
+      <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p')%>
+    </p>
 
-  <p>
-    <strong>bill_number</strong>
-    <%= @booking.bill_number%>
-  </p>
+    <p>
+      <strong>bill_number</strong>
+      <%= @booking.bill_number%>
+    </p>
 
-  <p>
-    <strong>currency</strong>
-    <%= @booking.currency%>
-  </p>
+    <p>
+      <strong>currency</strong>
+      <%= @booking.currency%>
+    </p>
 
-  <p>
-    <strong>amount</strong>
-    <%= @booking.amount%>
-  </p>
+    <p>
+      <strong>amount</strong>
+      <%= @booking.amount%>
+    </p>
 
-  <p>
-    <strong>recipt_number</strong>
-    <%= @booking.recipt_number%>
-  </p>
+    <p>
+      <strong>recipt_number</strong>
+      <%= @booking.recipt_number%>
+    </p>
 
-  <p>
-    <strong>ticket_type</strong>
-    <%= @booking.ticket_type%>
-  </p>
+    <p>
+      <strong>ticket_type</strong>
+      <%= @booking.ticket_type%>
+    </p>
 
-  <%= link_to 'Edit', edit_booking_path(@booking) %> |
-  <%= link_to 'Back', bookings_path %>
-</div>
+    <%= link_to 'Edit', edit_booking_path(@booking) %> |
+    <%= link_to 'Back', bookings_path %>
+  </div>
+<% end %>
 
 
