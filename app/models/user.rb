@@ -8,6 +8,8 @@ class User < ApplicationRecord
             length: { minimum: 5 }
   validates :contact_number, presence: true,
             length: { minimum: 7 }, numericality: true
+  validates :email, presence: true,
+                    length: { minimum: 2 }, uniqueness: { case_sensitive: false }
 
   has_many :user_bookings, :class_name => 'Booking', :foreign_key => 'user_id'
   has_many :agent_bookings, :class_name => 'Booking', :foreign_key => 'agent_id'
