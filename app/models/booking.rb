@@ -5,19 +5,14 @@ class Booking < ApplicationRecord
   belongs_to :agent, :class_name => 'User', :foreign_key => 'agent_id'
 
   validate :date_cannot_be_in_the_past
-  validates :airline, :origin, :destination, :flight_time,
-             :ticket_time_limit, :ticket_number, :bill_number,
-             :ticket_type, :flght_number, :pnr, :currency, :amount,
-             :presence => {:message => "can't be empty"}
-
 
   scope :completed, -> { where.not(recipt_number: nil) }
-  scope :pending, -> { where(recipt_number: nil).where("ticket_time_limit >= ?", Date.today).order("ticket_time_limit ASC") }
+  scope :pending, -> { where(recipt_number: nil).where("ticket_time_limit >= ? OR ticket_time_limit IS ?", Date.today, nil).order("ticket_time_limit ASC") }
 
   def status
-    if ticket_time_limit.to_date == (Date.today || Date.tomorrow)
+    if ticket_time_limit&.to_date == (Date.today || Date.tomorrow)
       'upcoming'
-    elsif ticket_time_limit.to_date < Date.today
+    elsif ticket_time_limit && ticket_time_limit.to_date < Date.today
       'overdue'
     else
       'normal'
