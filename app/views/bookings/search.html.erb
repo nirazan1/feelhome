@@ -33,9 +33,7 @@
       <p class="col-md-3 col-md-offset-6">
         <strong>Cost: <%= t["saleTotal"] %></strong>
         <!-- <%= link_to "Request Quote !", quote_request_path(params: params), class: "btn btn-md btn-success" %> -->
-        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalNorm">
-          Request Quote !
-        </button>
+        <%= link_to "Request Quote !", '#', id: 'bookflight', class: "btn btn-md btn-success", "data-id" => i , "data-toggle" => "modal", 'data-target' => '#myModalNorm' %>
       </p>
       <hr></hr>
     </div>
@@ -67,43 +65,33 @@
                 <p>Or visit our office at Putalisadak, Kathmandu</p>
                 <iframe style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1766.1698845031037!2d85.32272498531952!3d27.706793894264827!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6b5b07c0666bc159!2sFeel+Home+Travels+%26+Tours!5e0!3m2!1sen!2snp!4v1486042042109" width="100%" height="100%" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
               </p>
-              <!-- <strong>Or fill up the form below for online request !</strong>
+              <hr></hr>
+              <strong>Or sign up below for online request !</strong>
 
-                <form role="form" id="loginForm">
-                  <div class="form-group">
-                    <label for="exampleInputName1">Full Name</label>
-                      <input class="form-control"
-                      id="exampleInputName1" placeholder="Enter Full Name" required/>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                      <input type="email" class="form-control"
-                      id="exampleInputEmail1" placeholder="Enter email" required/>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputPhone1">Contact Number</label>
-                      <input type="tel" class="form-control"
-                      id="exampleInputPhone1" placeholder="Enter contact number" required/>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control"
-                          id="exampleInputPassword1" placeholder="Password" required/>
-                  </div>
-                </form> -->
-
+                <br></br>
+                <%= bootstrap_form_for(@user, as: :user, url: user_registration_path(@user)) do |f| %>
+                  <%= hidden_field_tag "flight_data", @response[session[:flight_number].to_i].to_json %>
+                  <%= f.text_field :name, required: true, label: "Full Name", pattern: ".{5,}", title: "5 characters minimum"%>
+                  <%= f.email_field :email, required: true, pattern: ".{5,}", title: "5 characters minimum", required: true, type:'email' %>
+                  <%= f.telephone_field :contact_number, required: true, pattern: "[0-9]{7,}", maxlength:"13", title: "Input Valid Contact Number, Between 7 to 13 Digit" %>
+                  <%= f.password_field :password, required: true, label: "Set Password", help: "Must be at least 8 characters", pattern: ".{8,}", title: "Must be at least 8 characters" %>
+                  <%= f.submit "Sign Up & Request Quote", class: "btn btn-success btn-lg" %>
+                <% end %>
 
             </div>
 
-            <!-- Modal Footer -->
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-primary">
-                   Request Quote !
-                </button>
-            </div> -->
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+  $(document).on("click", "#bookflight", function () {
+    var myBookId = $(this).data('id');
+    $(".modal-body #ticketNo").val( myBookId );
+    $.ajax({
+      url: '/booking/set_flight',
+      data: {flight_number: myBookId},
+      type: 'post'
+    })
+  });
+</script>
