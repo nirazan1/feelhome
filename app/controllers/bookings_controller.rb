@@ -57,6 +57,7 @@ class BookingsController < ApplicationController
     end
 
     if @booking.save
+      ApplicationMailer.customer_init_booking(@booking, new_booking = true).deliver! if current_user.customer?
       redirect_to @booking
     else
       render 'new'
@@ -79,6 +80,7 @@ class BookingsController < ApplicationController
     end
 
     if @booking.update(updated_params || booking_params)
+      ApplicationMailer.customer_init_booking(@booking, new_booking = false).deliver! if current_user.customer?
       redirect_to @booking
     else
       render 'edit'

@@ -20,4 +20,12 @@ class ApplicationMailer < ActionMailer::Base
     mail(:to => @agent.email, :subject => "FeelHomeTravels :: New Quote Requested! ")
   end
 
+  def customer_init_booking(booking, new_booking)
+    @agent = User.first
+    @booking = booking
+    @customer = booking.user
+    @new_booking = new_booking
+    mail(:to => @agent.email, :subject => "FeelHomeTravels :: #{ new_booking ? 'Customer Created A New Booking': 'Customer Updated A Booking' }")
+  end
+
 end

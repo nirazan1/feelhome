@@ -1,0 +1,7 @@
+Hello <%= @agent.name.capitalize %> !
+
+<%= @booking.user.name.capitalize %> <%= @new_booking ? 'created a new' : 'updated a' %> booking
+
+Follow up on the booking ASAP !
+
+Booking Info: <%= "https://feelhometravels.herokuapp.com/bookings/#{@booking.id}" %>
