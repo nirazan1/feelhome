@@ -1,19 +1,19 @@
-<% if @booking.flight_data %>
+<% if @booking.flight_data.present? %>
   <%= render 'flight_data' %>
 <% else %>
   <div class="col-md-4 col-md-offset-2">
     <p>
-      <strong>Booked At:</strong>
+      <strong>Booked At: </strong>
       <%= @booking.created_at.strftime('%A, %d %b %Y %l:%M %p') %>
     </p>
 
     <p>
-      <strong>Agent:</strong>
+      <strong>Agent: </strong>
       <%= @booking.agent&.name %>
     </p>
 
     <p>
-      <strong>Customer:</strong>
+      <strong>Customer: </strong>
       <%= @booking.user&.name %>
       <p>
         <%= "☎#{@booking.user&.contact_number} 📧 #{@booking.user&.email}"%>
@@ -21,32 +21,32 @@
     </p>
 
     <p>
-      <strong>Airline:</strong>
+      <strong>Airline: </strong>
       <%= @booking.airline %>
     </p>
 
     <p>
-      <strong>Origin:</strong>
+      <strong>Origin: </strong>
       <%= @booking.origin %>
     </p>
 
     <p>
-      <strong>destination</strong>
+      <strong>Destination: </strong>
       <%= @booking.destination%>
     </p>
 
     <p>
-      <strong>flght_number</strong>
+      <strong>Flight Number: </strong>
       <%= @booking.flght_number%>
     </p>
 
     <p>
-      <strong>pnr</strong>
+      <strong>PNR: </strong>
       <%= @booking.pnr%>
     </p>
 
     <p>
-      <strong>notes</strong>
+      <strong>Notes: </strong>
       <%= @booking.notes%>
     </p>
 
@@ -56,43 +56,43 @@
 
 
     <p>
-      <strong>ticket_number</strong>
+      <strong>Ticket Number: </strong>
       <%= @booking.ticket_number%>
     </p>
 
     <p>
-      <strong>flight_time</strong>
+      <strong>Flight Time: </strong>
       <%= @booking.flight_time&.strftime('%A, %d %b %Y %l:%M %p')%>
     </p>
 
 
     <p>
-      <strong>ticket_time_limit</strong>
+      <strong>Ticket Time Limit: </strong>
       <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p')%>
     </p>
 
     <p>
-      <strong>bill_number</strong>
+      <strong>Bill Number: </strong>
       <%= @booking.bill_number%>
     </p>
 
     <p>
-      <strong>currency</strong>
+      <strong>currency: </strong>
       <%= @booking.currency%>
     </p>
 
     <p>
-      <strong>amount</strong>
+      <strong>Amount: </strong>
       <%= @booking.amount%>
     </p>
 
     <p>
-      <strong>recipt_number</strong>
+      <strong>Receipt Number: </strong>
       <%= @booking.recipt_number%>
     </p>
 
     <p>
-      <strong>ticket_type</strong>
+      <strong>Ticket Type: </strong>
       <%= @booking.ticket_type%>
     </p>
 
