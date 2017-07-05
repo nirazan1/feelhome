@@ -4,7 +4,7 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :agent, :class_name => 'User', :foreign_key => 'agent_id'
 
-  validate :date_cannot_be_in_the_past
+  # validate :date_cannot_be_in_the_past
 
   scope :completed, -> { where.not(recipt_number: nil) }
   scope :pending, -> { where(recipt_number: nil).where("ticket_time_limit >= ? OR ticket_time_limit IS ?", Date.today, nil).order("ticket_time_limit ASC") }
