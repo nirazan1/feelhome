@@ -28,4 +28,17 @@ class ApplicationMailer < ActionMailer::Base
     mail(:to => @agent.email, :subject => "FeelHomeTravels :: #{ new_booking ? 'Customer Created A New Booking': 'Customer Updated A Booking' }")
   end
 
+  def new_account_creation(booking, generated_password)
+    @booking = booking
+    @customer = booking.user
+    @password = generated_password
+    mail(:to => @customer.email, :subject => "FeelHomeTravels :: Account Created ! ")
+  end
+
+  def booking_updated(booking, user)
+    @booking = booking
+    @user = user
+    mail(:to => User.default_agent.email :subject => "FeelHomeTravels :: Booking Updated ! ")
+  end
+
 end

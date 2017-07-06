@@ -54,7 +54,11 @@ class BookingsController < ApplicationController
     end
 
     if @booking.user.nil?
-      @new_user.save(validate: false)
+      generated_password = Devise.friendly_token.first(8)
+      @new_user.update_attributes(password: generated_password)
+      if @new_user.save(validate: false)
+        ApplicationMailer.new_account_creation(@booking, generated_password).deliver!
+      end
       @booking.update_attributes(user: @new_user)
     end
 
@@ -83,6 +87,7 @@ class BookingsController < ApplicationController
 
     if @booking.update(updated_params || booking_params)
       ApplicationMailer.customer_init_booking(@booking, new_booking = false).deliver! if current_user.customer?
+      ApplicationMailer.booking_updated(@booking, current_user).deliver!
       redirect_to @booking
     else
       render 'edit'

@@ -1,0 +1,10 @@
+Hello <%= @customer.name.capitalize %> !
+
+You account has been created and a booking has been made in your name.
+
+Your password is: <%= @password %>
+
+Please login with your email <%= @customer.email %> to view your booking details.
+
+Booking Info:
+<%= "https://feelhometravels.herokuapp.com/bookings/#{@booking.id}" %>
