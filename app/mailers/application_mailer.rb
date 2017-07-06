@@ -38,7 +38,7 @@ class ApplicationMailer < ActionMailer::Base
   def booking_updated(booking, user)
     @booking = booking
     @user = user
-    mail(:to => User.default_agent.email :subject => "FeelHomeTravels :: Booking Updated ! ")
+    mail(:to => User.default_agent.email, :subject => "FeelHomeTravels :: Booking Updated ! ")
   end
 
 end
