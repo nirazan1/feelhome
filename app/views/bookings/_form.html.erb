@@ -42,6 +42,11 @@
       </p>
 
       <p>
+        <%= f.label :trip_option %><br>
+        <%= f.select :trip_option, [['One Way', 'one_way'], ['Round Trip', 'round_trip']] %>
+      </p>
+
+      <p>
         <%= f.label :ticket_number %><br>
         <%= f.text_field :ticket_number, class: 'form-control' %>
       </p>
@@ -78,6 +83,11 @@
       <p>
         <%= f.label :destination %><br>
         <%= f.text_field :destination, class: 'form-control' %>
+      </p>
+
+      <p>
+        <%= f.label :passengers %><br>
+        <%= f.text_field :passengers,autofocus: true, class: 'form-control' %>
       </p>
 
       <p>

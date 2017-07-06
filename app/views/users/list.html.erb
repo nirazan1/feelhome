@@ -1,0 +1,19 @@
+<h4>Customers </h4>
+<table class="table table-bordered table-hover table-striped">
+  <tr>
+    <th>Full Name</th>
+    <th>Email</th>
+    <th>Contact Number</th>
+    <th>Number of Bookings</th>
+  </tr>
+
+  <% @users.each do |u| %>
+    <tr onclick="location.href='users/<%=u.id%>'" style="cursor: pointer;">
+      <td><%= u.name %></td>
+      <td><%= u.email %></td>
+      <td><%= u.contact_number %></td>
+      <td><%= u.user_bookings.count %></td>
+      <td><%= link_to 'Show', user_path(u) %></td>
+    </tr>
+  <% end %>
+</table>

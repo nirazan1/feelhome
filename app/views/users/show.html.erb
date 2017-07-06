@@ -1,3 +1,82 @@
-<%= @user.name %>
-<%= @user.email %>
-<%= @user.contact_number %>
+<h3><%= "👤 #{@user.name}" %></h3>
+
+<h3><%= "📧 #{@user.email}"%></h3>
+
+<h3><%= "📞 #{@user.contact_number}" %></h3>
+
+
+
+</br>
+<% unless current_user.customer? %>
+  <%= link_to 'Create New booking', new_booking_path %>
+<% end %>
+
+<h4><%= params[:tab]&.humanize %></h4>
+
+<table class="table table-bordered table-hover table-striped">
+  <tr>
+    <th>Booked Date</th>
+    <th>Agent</th>
+    <th>Airline</th>
+    <th>Origin-Destination</th>
+    <th>Trip Option</th>
+    <th>Passengers</th>
+    <th>Flight Time</th>
+    <th>Ticket Time Limit</th>
+    <th>Flight Number</th>
+    <th>PNR</th>
+    <th>Ticket Numbers</th>
+    <th>Bill #</th>
+    <th>Amount</th>
+    <th>Receipt #</th>
+    <th>Ticket Type</th>
+    <th>Notes</th>
+  </tr>
+
+  <% @user.user_bookings.each do |booking| %>
+    <tr class="<%= booking.status %>" onclick="location.href='bookings/<%=booking.id%>'">
+      <td><%= booking.created_at&.strftime('%A, %d %b %Y %l:%M %p') %></td>
+      <td><%= booking.agent&.name %></td>
+      <td><%= booking.airline %></td>
+      <td><%= "#{booking.origin} to #{booking.destination}" %></td>
+      <td><%= booking.trip_option %></td>
+      <td><%= booking.passengers %></td>
+      <td><%= booking.flight_time&.strftime('%A, %d %b %Y %l:%M %p') %></td>
+      <td><%= booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p') %></td>
+      <td><%= booking.flght_number %></td>
+      <td><%= booking.pnr %></td>
+      <td><%= booking.ticket_number %></td>
+      <td><%= booking.bill_number %></td>
+      <td><%= "#{booking.currency} #{booking.amount}" %></td>
+      <td><%= booking.recipt_number %></td>
+      <td><%= booking.ticket_type %></td>
+      <td><%= truncate(booking.notes) %></td>
+      <td><%= link_to 'Show', booking_path(booking) %></td>
+      <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
+      <% if current_user.admin? %>
+        <td><%= link_to 'Delete', booking_path(booking),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+
+<style>
+.upcoming {
+  background-color: lightpink;
+  cursor:pointer;
+}
+.overdue {
+  background-color: red;
+  cursor:pointer;
+}
+.completed {
+  background-color: lightgreen;
+  cursor:pointer;
+}
+.normal {
+  cursor:pointer;
+}
+</style>

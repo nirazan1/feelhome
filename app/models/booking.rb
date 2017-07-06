@@ -6,14 +6,18 @@ class Booking < ApplicationRecord
 
   # validate :date_cannot_be_in_the_past
 
-  scope :completed, -> { where.not(recipt_number: nil) }
-  scope :pending, -> { where(recipt_number: nil).where("ticket_time_limit >= ? OR ticket_time_limit IS ?", Date.today, nil).order("ticket_time_limit ASC") }
+  scope :completed, -> { where.not(ticket_number: nil) }
+  scope :pending, -> { where(ticket_number: nil).where("ticket_time_limit >= ? OR ticket_time_limit IS ?", Date.today, nil).order("ticket_time_limit ASC") }
+  scope :payment_due, -> { where(recipt_number: nil)}
+
 
   def status
-    if ticket_time_limit&.to_date == (Date.today || Date.tomorrow)
+    if ticket_time_limit && ticket_time_limit.to_time < Time.current + 9.hours
       'upcoming'
-    elsif ticket_time_limit && ticket_time_limit.to_date < Date.today
+    elsif ticket_time_limit && ticket_time_limit.to_time < Time.current + 3.hours
       'overdue'
+    elsif ticket_number.present?
+      'completed'
     else
       'normal'
     end

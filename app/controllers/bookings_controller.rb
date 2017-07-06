@@ -20,6 +20,8 @@ class BookingsController < ApplicationController
                     Booking.all.completed
                   elsif params[:tab] == 'all_bookings'
                     Booking.all
+                  elsif params[:tab] == 'all_bookings'
+                    Booking.all.payment_due
                   else
                     current_user.agent_bookings.pending
                   end

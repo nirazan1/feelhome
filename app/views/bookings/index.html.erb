@@ -1,37 +1,27 @@
-<div class="row">
-  <div class="col-md-10 col-md-offset-2">
-    <h3>Ticket Booking System</h3>
-    <ul class="nav nav-tabs">
-      <li role="presentation" id="default_tab"><%= link_to 'Pending Bookings', bookings_path(tab: 'pending_bookings') %></li>
-      <li role="presentation"><%= link_to 'Completed Bookings', bookings_path(tab: 'completed_bookings') %></li>
-      <li role="presentation"><%= link_to 'All Bookings', bookings_path(tab: 'all_bookings') %></li>
-      <% if current_user.agent? %>
-        <li role="presentation"><%= link_to 'All Pending Bookings', bookings_path(tab: 'all_pending_bookings') %></li>
-        <li role="presentation"><%= link_to 'All Completed Bookings', bookings_path(tab: 'all_completed_bookings') %></li>
-      <% end %>
-    </ul>
-  </div>
-</div>
-
-
 </br>
-<%= link_to 'Create New booking', new_booking_path %>
+<% unless current_user.customer? %>
+  <%= link_to 'Create New booking', new_booking_path %>
+<% end %>
 
 <h4><%= params[:tab]&.humanize %></h4>
 
 <table class="table table-bordered table-hover table-striped">
   <tr>
     <th>Booked Date</th>
-    <th>Agent</th>
-    <th>Customer</th>
+    <% unless current_user.customer? %>
+      <th>Agent</th>
+      <th>Customer</th>
+    <% end %>
+
     <th>Airline</th>
-    <th>Origin</th>
-    <th>Destination</th>
+    <th>Origin-Destination</th>
+    <th>Trip Option</th>
+    <th>Passengers</th>
     <th>Flight Time</th>
     <th>Ticket Time Limit</th>
     <th>Flight Number</th>
     <th>PNR</th>
-    <th>Ticket Number</th>
+    <th>Ticket Numbers</th>
     <th>Bill #</th>
     <th>Amount</th>
     <th>Receipt #</th>
@@ -42,11 +32,14 @@
   <% @bookings.each do |booking| %>
     <tr class="<%= booking.status %>" onclick="location.href='bookings/<%=booking.id%>'">
       <td><%= booking.created_at&.strftime('%A, %d %b %Y %l:%M %p') %></td>
-      <td><%= booking.agent&.name %></td>
-      <td><%= "#{booking.user&.name} (☎#{booking.user&.contact_number})" %></td>
+      <% unless current_user.customer? %>
+        <td><%= booking.agent&.name %></td>
+        <td><%= "#{booking.user&.name} (☎#{booking.user&.contact_number})" %></td>
+      <% end %>
       <td><%= booking.airline %></td>
-      <td><%= booking.origin %></td>
-      <td><%= booking.destination %></td>
+      <td><%= "#{booking.origin} to #{booking.destination}" %></td>
+      <td><%= booking.trip_option %></td>
+      <td><%= booking.passengers %></td>
       <td><%= booking.flight_time&.strftime('%A, %d %b %Y %l:%M %p') %></td>
       <td><%= booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p') %></td>
       <td><%= booking.flght_number %></td>
@@ -58,10 +51,14 @@
       <td><%= booking.ticket_type %></td>
       <td><%= truncate(booking.notes) %></td>
       <td><%= link_to 'Show', booking_path(booking) %></td>
-      <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
-      <!-- <td><%= link_to 'Delete', booking_path(booking),
+      <% unless current_user.customer? %>
+        <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
+      <% end %>
+      <% if current_user.admin? %>
+        <td><%= link_to 'Delete', booking_path(booking),
               method: :delete,
-              data: { confirm: 'Are you sure?' } %></td> -->
+              data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
@@ -74,6 +71,10 @@
 }
 .overdue {
   background-color: red;
+  cursor:pointer;
+}
+.completed {
+  background-color: lightgreen;
   cursor:pointer;
 }
 .normal {

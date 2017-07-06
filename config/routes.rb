@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'booking/search' => 'bookings#search'
   post 'booking/set_flight' => 'bookings#set_flight'
   get 'quote_request' => 'bookings#quote_request'
+  get 'user_lists' => 'users#list'
 
   resources :bookings
 end
