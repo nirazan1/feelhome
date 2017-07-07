@@ -1,6 +1,6 @@
-Hello <%= @agent.name.capitalize %> !
+Hello <%= @agent.name.titleize %> !
 
-<%= @booking.user.name.capitalize %>'s booking is about to expire. <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p') %>
+<%= @booking.user.name.titleize %>'s booking is about to expire. <%= @booking.ticket_time_limit&.strftime('%A, %d %b %Y %l:%M %p') %>
 
 Follow up on the booking ASAP !
 
