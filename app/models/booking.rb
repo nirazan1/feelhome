@@ -8,7 +8,7 @@ class Booking < ApplicationRecord
 
   scope :completed, -> { where("ticket_number <> ''") }
   # scope :pending, -> { where(ticket_number: nil).where("ticket_time_limit >= ? OR ticket_time_limit IS ?", Date.today, nil).order("ticket_time_limit ASC") }
-  scope :payment_due, -> { where("recipt_number <> ''") }
+  scope :payment_due, -> { where(recipt_number: nil) }
   scope :pending, -> { where.not("ticket_number <> ''") }
 
 
