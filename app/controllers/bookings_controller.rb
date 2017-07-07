@@ -15,13 +15,13 @@ class BookingsController < ApplicationController
                   if params[:tab] == 'completed_bookings'
                     current_user.agent_bookings.completed
                   elsif params[:tab] == 'all_pending_bookings'
-                    Booking.all.pending
+                    Booking.pending
                   elsif params[:tab] == 'all_completed_bookings'
-                    Booking.all.completed
+                    Booking.completed
                   elsif params[:tab] == 'all_bookings'
                     Booking.all
-                  elsif params[:tab] == 'all_bookings'
-                    Booking.all.payment_due
+                  elsif params[:tab] == 'payment_due'
+                    Booking.payment_due
                   else
                     current_user.agent_bookings.pending
                   end
