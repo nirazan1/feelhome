@@ -56,10 +56,9 @@ class BookingsController < ApplicationController
     if @booking.user.nil?
       generated_password = Devise.friendly_token.first(8)
       @new_user.update_attributes(password: generated_password)
-      if @new_user.save(validate: false)
-        ApplicationMailer.new_account_creation(@booking, generated_password).deliver!
-      end
+      @new_user.save(validate: false)
       @booking.update_attributes(user: @new_user)
+      ApplicationMailer.new_account_creation(@booking, generated_password).deliver!
     end
 
     if @booking.save

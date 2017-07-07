@@ -30,7 +30,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def new_account_creation(booking, generated_password)
     @booking = booking
-    @customer = booking.user
+    @customer = @booking.user
     @password = generated_password
     mail(:to => @customer.email, :subject => "FeelHomeTravels :: Account Created ! ")
   end
