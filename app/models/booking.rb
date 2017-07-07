@@ -7,8 +7,9 @@ class Booking < ApplicationRecord
   # validate :date_cannot_be_in_the_past
 
   scope :completed, -> { where.not(ticket_number: nil) }
-  scope :pending, -> { where(ticket_number: nil).where("ticket_time_limit >= ? OR ticket_time_limit IS ?", Date.today, nil).order("ticket_time_limit ASC") }
+  # scope :pending, -> { where(ticket_number: nil).where("ticket_time_limit >= ? OR ticket_time_limit IS ?", Date.today, nil).order("ticket_time_limit ASC") }
   scope :payment_due, -> { where(recipt_number: nil)}
+  scope :pending, -> { where(ticket_number: nil)}
 
 
   def status
