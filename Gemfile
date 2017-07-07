@@ -45,6 +45,7 @@ gem 'sparkpost_rails'
 gem 'exception_notification'
 gem 'httparty'
 gem 'bootstrap_form'
+gem "cancan"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
