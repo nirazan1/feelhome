@@ -12,12 +12,12 @@ class Booking < ApplicationRecord
 
 
   def status
-    if ticket_time_limit && ticket_time_limit.to_time < Time.current + 9.hours
+    if ticket_number.present?
+      'completed'
+    elsif ticket_time_limit && ticket_time_limit.to_time < Time.current + 9.hours
       'upcoming'
     elsif ticket_time_limit && ticket_time_limit.to_time < Time.current + 3.hours
       'overdue'
-    elsif ticket_number.present?
-      'completed'
     else
       'normal'
     end
