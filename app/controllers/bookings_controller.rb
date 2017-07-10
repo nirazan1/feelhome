@@ -59,7 +59,7 @@ class BookingsController < ApplicationController
       @new_user.update_attributes(password: generated_password)
       @new_user.save(validate: false)
       @booking.update_attributes(user: @new_user)
-      ApplicationMailer.new_account_creation(@booking, generated_password).deliver!
+      ApplicationMailer.new_account_creation(@booking, generated_password).deliver! if @new_user.email.present?
     end
 
     if @booking.save
