@@ -160,7 +160,7 @@ class BookingsController < ApplicationController
   def booking_params
     params.require(:booking).permit(:notes, :airline, :origin, :destination,
      :flight_time, :flght_number, :pnr, :ticket_number, :ticket_time_limit,
-     :bill_number, :currency, :amount, :recipt_number, :ticket_type, :agent_id, :user_id, :trip_option)
+     :bill_number, :currency, :amount, :recipt_number, :ticket_type, :agent_id, :user_id, :trip_option, :passengers)
   end
 
   def user_params
