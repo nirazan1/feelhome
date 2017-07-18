@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!
   skip_before_action :authenticate_user!, only: [:search, :set_flight]
   load_and_authorize_resource except: [:search, :set_flight, :create]
+  before_action :check_user_email, only: [:create, :update]
 
   def index
     @bookings = if current_user.customer?
@@ -154,6 +155,12 @@ class BookingsController < ApplicationController
               "preferredCabin": tck_class
             } if params[:return_date].present?
     body
+  end
+
+  def check_user_email
+    if booking_params[:user_id].blank? && user_params[:email].blank?
+      redirect_to (:back), alert: "User Email Cannot Be Blank ! If you dont have user's email use <user name>@mailinator.com. e.g. actionaid@mailinator.com"
+    end
   end
 
   private
