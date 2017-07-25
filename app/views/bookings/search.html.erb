@@ -68,7 +68,6 @@
               <hr></hr>
               <% unless current_user %>
                 <strong>Or sign up below for online request !</strong>
-
                   <br></br>
                   <%= bootstrap_form_for(@user, as: :user, url: user_registration_path(@user)) do |f| %>
                     <%= hidden_field_tag "flight_data", @response[session[:flight_number].to_i].to_json %>
@@ -79,13 +78,11 @@
                     <%= f.submit "Sign Up & Request Quote", class: "btn btn-success btn-lg" %>
                   <% end %>
               <% else %>
-                <div class="col-md-offset-4">
-                  <strong>Or click below for online request !</strong>
-                  <%= form_for(@booking) do |f| %>
-                    <%= hidden_field_tag "flight_data", @response[session[:flight_number].to_i].to_json %>
-                    <%= f.submit "Request Quote", class: "btn btn-success btn-lg" %>
-                  <% end %>
-                </div>
+                <strong>Or click below for online request !</strong>
+                <%= form_for(@booking) do |f| %>
+                  <%= hidden_field_tag "flight_data", @response[session[:flight_number].to_i].to_json %>
+                  <%= f.submit "Request Quote", class: "btn btn-success btn-lg" %>
+                <% end %>
               <% end %>
             </div>
         </div>

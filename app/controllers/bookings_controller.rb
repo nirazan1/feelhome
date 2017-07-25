@@ -48,7 +48,6 @@ class BookingsController < ApplicationController
 
   def create
     @new_user = User.new(user_params) if params[:user]
-
     if params["flight_data"]
       flight_data = JSON.parse(params["flight_data"])
       @booking = Booking.create(flight_data: flight_data, user: current_user, agent: User.default_agent)
@@ -72,7 +71,7 @@ class BookingsController < ApplicationController
 
     if @booking.save
       ApplicationMailer.customer_init_booking(@booking, new_booking = true).deliver! if current_user.customer?
-      redirect_to @booking
+      redirect_to @booking, notice: 'Booking Created !'
     else
       render 'new'
     end
@@ -166,7 +165,7 @@ class BookingsController < ApplicationController
   end
 
   def check_user_email
-    if booking_params[:user_id].blank? && user_params[:email].blank?
+    if params[:flight_data].nil? && booking_params[:user_id].blank? && user_params[:email].blank?
       redirect_to (:back), alert: "User Email Cannot Be Blank ! If you dont have user's email use <user name>@mailinator.com. e.g. actionaid@mailinator.com"
     end
   end
