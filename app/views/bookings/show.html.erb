@@ -8,18 +8,20 @@
       <%= @booking.created_at.strftime('%A, %d %b %Y %l:%M %p') %>
     </p>
 
-    <p>
-      <strong>Agent: </strong>
-      <%= @booking.agent&.name %>
-    </p>
-
-    <p>
-      <strong>Customer: </strong>
-      <%= @booking.user&.name %>
+    <% unless current_user.customer? %>
       <p>
-        <%= "☎#{@booking.user&.contact_number} 📧 #{@booking.user&.email}"%>
+        <strong>Agent: </strong>
+        <%= @booking.agent&.name %>
       </p>
-    </p>
+
+      <p>
+        <strong>Customer: </strong>
+        <%= @booking.user&.name %>
+        <p>
+          <%= "☎#{@booking.user&.contact_number} 📧 #{@booking.user&.email}"%>
+        </p>
+      </p>
+    <% end %>
 
     <p>
       <strong>Airline: </strong>
@@ -97,7 +99,9 @@
       <%= @booking.ticket_type%>
     </p>
 
-    <%= link_to 'Edit', edit_booking_path(@booking) %> |
+    <% unless current_user.customer? %>
+      <%= link_to 'Edit', edit_booking_path(@booking) %> |
+    <% end %>
     <%= link_to 'Back', bookings_path %>
   </div>
 <% end %>
