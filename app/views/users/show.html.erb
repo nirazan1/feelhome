@@ -34,7 +34,7 @@
   </tr>
 
   <% @user.user_bookings.each do |booking| %>
-    <tr class="<%= booking.status %>" onclick="location.href='bookings/<%=booking.id%>'">
+    <tr class="<%= booking.status %>" onclick="location.href='/bookings/<%=booking.id%>'">
       <td><%= booking.created_at&.strftime('%A, %d %b %Y %l:%M %p') %></td>
       <td><%= booking.agent&.name %></td>
       <td><%= booking.airline %></td>
