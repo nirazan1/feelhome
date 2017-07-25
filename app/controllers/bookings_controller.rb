@@ -48,11 +48,18 @@ class BookingsController < ApplicationController
 
   def create
     @new_user = User.new(user_params) if params[:user]
-    @booking = Booking.new(booking_params)
-    if current_user.agent?
-      @booking.update_attributes(agent: current_user)
-    elsif current_user.customer?
-      @booking.update_attributes(user: current_user, agent: User.default_agent)
+
+    if params["flight_data"]
+      flight_data = JSON.parse(params["flight_data"])
+      @booking = Booking.create(flight_data: flight_data, user: current_user, agent: User.default_agent)
+      ApplicationMailer.quote_request(@booking).deliver!
+    else
+      @booking = Booking.new(booking_params)
+      if current_user.agent?
+        @booking.update_attributes(agent: current_user)
+      elsif current_user.customer?
+        @booking.update_attributes(user: current_user, agent: User.default_agent)
+      end
     end
 
     if @booking.user.nil?
@@ -60,7 +67,7 @@ class BookingsController < ApplicationController
       @new_user.update_attributes(password: generated_password)
       @new_user.save(validate: false)
       @booking.update_attributes(user: @new_user)
-      ApplicationMailer.new_account_creation(@booking, generated_password).deliver! if @new_user.email.present?
+      ApplicationMailer.new_account_creation(@booking, generated_password).deliver! if @new_user.email.present? && params["flight_data"].nil?
     end
 
     if @booking.save
@@ -109,6 +116,7 @@ class BookingsController < ApplicationController
 
   def search
     @user = User.new
+    @booking = Booking.new
     @response = HTTParty.post("https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyBjVK8xezhFNYx-aJSRJiPIJi8ecMqNKpY",
       {
         :body => search_body.to_json,
