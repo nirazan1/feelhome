@@ -123,7 +123,7 @@ class BookingsController < ApplicationController
       })
     if @response&.success?
       @response = @response["trips"]["tripOption"]
-      redirect_to new_user_session_path, alert: '404 not data found !' if @response.blank?
+      redirect_to new_user_session_path, alert: 'no data found !' if @response.blank?
     else
       redirect_to new_user_session_path, alert: @response.dig(:error) || '404 not found !'
       # render :json => { :errors => @response["error"] }
