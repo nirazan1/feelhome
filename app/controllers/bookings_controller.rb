@@ -168,7 +168,7 @@ class BookingsController < ApplicationController
   def check_user_email
     if params[:flight_data].nil? && booking_params[:user_id].blank? && user_params[:email].blank?
       redirect_to (:back), alert: "User Email Cannot Be Blank ! If you dont have user's email use <user name>@mailinator.com. e.g. actionaid@mailinator.com"
-    elsif User.find_by(email: user_params[:email])
+    elsif booking_params[:user_id].blank? && User.find_by(email: user_params[:email])
       redirect_to (:back), alert: "User with email #{user_params[:email]} already exists ! If you dont have user's email use #{user_params[:contact_number]}@mailinator.com"
     end
   end

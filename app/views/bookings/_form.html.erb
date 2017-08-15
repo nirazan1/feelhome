@@ -151,12 +151,12 @@
       if ( this.value )
       {
         $("#new_user_div").hide();
-        $('#user_email').prop('required',false);
+        $('#user_email, #user_name, #user_contact_number').prop('required',false);
       }
       else
       {
         $("#new_user_div").show();
-        $('#user_email').prop('required',true);
+        $('#user_email, #user_name, #user_contact_number').prop('required',true);
       }
     });
 });
