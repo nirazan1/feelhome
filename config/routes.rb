@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post 'booking/set_flight' => 'bookings#set_flight'
   get 'quote_request' => 'bookings#quote_request'
   get 'user_lists' => 'users#list'
+  get "/user/check_email" => "users#check_email"
 
   resources :bookings
 end

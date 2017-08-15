@@ -159,5 +159,27 @@
         $('#user_email, #user_name, #user_contact_number').prop('required',true);
       }
     });
+    $('#user_email').bind('change paste keyup propertychange input', function() {
+      if($(this).val().length > 5)
+      {
+        $.ajax({
+          url: '/user/check_email',
+          type: 'GET',
+          data: {
+            email: $(this).val()
+          },
+          success: function(data, textStatus, jqXHR) {
+            console.log('no email found !');
+            $("#errfn").html('');
+            $('.btn-success').prop('disabled', false);
+          },
+          error: function(data, textStatus, jqXHR) {
+            console.log('user with email exists !');
+            $("#errfn").html('Warning: User with this email already exists! Use new email for new user.');
+            $('.btn-success').prop('disabled', true);
+          }
+        });
+      }
+    });
 });
 </script>
