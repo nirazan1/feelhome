@@ -128,11 +128,12 @@ class BookingsController < ApplicationController
           :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
         })
       if response&.success?
+        response = response.with_indifferent_access
         @trip_data = response["trips"]["data"]
         @trip_option = response["trips"]["tripOption"]
         redirect_to new_user_session_path, alert: 'no data found !' if response.blank?
       else
-        redirect_to new_user_session_path, alert: @response.dig(:error) || '404 not found !'
+        redirect_to new_user_session_path, alert: @response&.dig(:error) || '404: search data not found !'
       end
     end
   end
