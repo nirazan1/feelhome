@@ -1,41 +1,46 @@
 <div class="col-md-8 col-md-offset-1">
-  <% @response.each_with_index do |t, i| %>
+  <% @trip_option.each_with_index do |t, i| %>
     <div class="row">
-      <h5>Flight Option <%= i + 1 %></h5>
+      <br></br>
+      <strong class="col-md-12 col-md-offset-6 strike">Flight Option <%= i + 1 %></strong>
       <% t["slice"].each do |s| %>
         <div class="col-md-12 col-md-offset-1">
-          <p>Total Duration: <%= formatted_duration(s["duration"]) %></p>
+          <b>Total Duration: <%= formatted_duration(s["duration"]) %></b>
         </div>
         <% s["segment"].each do |sg| %>
-          <div class="col-md-12 col-md-offset-2">
+          <table class="table col-md-12 col-md-offset-2">
             <% sg["leg"].each do |l| %>
-              <div class="col-md-6">
-                <p>Flight: <%= "#{sg["flight"]["carrier"]} #{sg["flight"]["number"]}" %></p>
-                <p> Origin: <%= l["origin"] %> </p>
-                <p> Departure Time: <%= l["departureTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
-                <p> Origin Terminal: <%= l["originTerminal"] %> </p>
-                <p> Duration: <%= formatted_duration(l["duration"]) %> </p>
-              </div>
-              <div class="col-md-6">
-                <p> Aircraft: <%= l["aircraft"] %> </p>
-                <p> Destination: <%= l["destination"] %> </p>
-                <p> Arrival Time: <%= l["arrivalTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
-                <p> Destination Terminal: <%= l["destinationTerminal"] %> </p>
-              </div>
-            <% end %>
-            <% if sg["connectionDuration"].to_i > 0 %>
-              <p>Transit Duration: <%= formatted_duration(sg["connectionDuration"])%></p>
-            <% end %>
-            <hr></hr>
-          </div>
+              <div class="col-md-12">
+                <div class="col-md-2">
+                  <%= image_tag "http://pics.avs.io/100/100/#{sg[:flight][:carrier]}.png" %>
+                </div>
+                <div class="col-md-5">
+                  <p> Flight: <%= "#{flight_detail(@trip_data, sg)}" %></p>
+                  <p> Origin: <%= "#{location_detail(@trip_data, l["origin"])}" %> </p>
+                  <p> Departure Time: <%= l["departureTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
+                  <p> Origin Terminal: <%= l["originTerminal"] %> </p>
+                  <p> Duration: <%= formatted_duration(l["duration"]) %> </p>
+                </div>
+                <div class="col-md-5">
+                  <p> Aircraft: <%= "#{aircraft_detail(@trip_data, l)}" %> </p>
+                  <p> Destination: <%= "#{location_detail(@trip_data, l["destination"])}" %> </p>
+                  <p> Arrival Time: <%= l["arrivalTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
+                  <p> Destination Terminal: <%= l["destinationTerminal"] || "N/A" %> </p>
+                </div>
+              <% end %>
+              <% if sg["connectionDuration"].to_i.positive? %>
+                <u>Transit Duration: <%= formatted_duration(sg["connectionDuration"])%></u>
+              <% end %>
+              <hr></hr>
+            </div>
+          </table>
         <% end %>
       <% end %>
-      <p class="col-md-3 col-md-offset-6">
+      <div class="col-md-4 col-md-offset-4">
         <strong>Cost: <%= t["saleTotal"] %></strong>
-        <!-- <%= link_to "Request Quote !", quote_request_path(params: params), class: "btn btn-md btn-success" %> -->
-        <%= link_to "Request Quote !", '#', id: 'bookflight', class: "btn btn-md btn-success", "data-id" => i , "data-toggle" => "modal", 'data-target' => '#myModalNorm' %>
-      </p>
-      <hr></hr>
+        <%= link_to "Request Quote !", '#', id: 'bookflight', class: "btn btn-md btn-success", "data-flight-id" => i, "data-trip-option" => t.to_json , "data-toggle" => "modal", 'data-target' => '#myModalNorm' %>
+        <hr></hr>
+      </div>
     </div>
   <% end %>
 </div>
@@ -70,7 +75,7 @@
                 <strong>Or sign up below for online request !</strong>
                   <br></br>
                   <%= bootstrap_form_for(@user, as: :user, url: user_registration_path(@user)) do |f| %>
-                    <%= hidden_field_tag "flight_data", @response[session[:flight_number].to_i].to_json %>
+                    <%= hidden_field_tag "flight_data", nil %>
                     <%= f.text_field :name, required: true, label: "Full Name", pattern: ".{5,}", title: "5 characters minimum"%>
                     <%= f.email_field :email, required: true, pattern: ".{5,}", title: "5 characters minimum", required: true, type:'email' %>
                     <%= f.telephone_field :contact_number, required: true, pattern: "[0-9]{7,}", maxlength:"13", title: "Input Valid Contact Number, Between 7 to 13 Digit" %>
@@ -80,7 +85,7 @@
               <% else %>
                 <strong>Or click below for online request !</strong>
                 <%= form_for(@booking) do |f| %>
-                  <%= hidden_field_tag "flight_data", @response[session[:flight_number].to_i].to_json %>
+                  <%= hidden_field_tag "flight_data", nil %>
                   <%= f.submit "Request Quote", class: "btn btn-success btn-lg" %>
                 <% end %>
               <% end %>
@@ -91,12 +96,7 @@
 
 <script type="text/javascript">
   $(document).on("click", "#bookflight", function () {
-    var myBookId = $(this).data('id');
-    $(".modal-body #ticketNo").val( myBookId );
-    $.ajax({
-      url: '/booking/set_flight',
-      data: {flight_number: myBookId},
-      type: 'post'
-    })
+    var tripOption = JSON.stringify($(this).data('trip-option'));
+    $(".modal-body #flight_data").val( tripOption );
   });
 </script>
