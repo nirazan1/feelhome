@@ -16,6 +16,7 @@ ActiveAdmin.register Booking do
     column :id
     column :agent
     column :user
+    column :passengers
     column :flight_time
     column :ticket_time_limit
     column :flight_number
