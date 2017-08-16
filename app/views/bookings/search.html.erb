@@ -12,7 +12,7 @@
             <% sg["leg"].each do |l| %>
               <div class="col-md-12">
                 <div class="col-md-2">
-                  <%= image_tag "http://pics.avs.io/100/100/#{sg[:flight][:carrier]}.png" %>
+                  <%= image_tag "http://pics.avs.io/100/100/#{sg["flight"]["carrier"]}.png" %>
                 </div>
                 <div class="col-md-5">
                   <p> Flight: <%= "#{flight_detail(@trip_data, sg)}" %></p>
