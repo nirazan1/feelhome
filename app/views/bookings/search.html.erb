@@ -15,7 +15,11 @@
                   <%= image_tag "http://pics.avs.io/100/100/#{sg["flight"]["carrier"]}.png" %>
                 </div>
                 <div class="col-md-5">
-                  <p> Flight: <%= "#{flight_detail(@trip_data, sg)}" %></p>
+                  <p>
+                    Flight: <%= "#{flight_detail(@trip_data, sg)}" %>
+                      <%= link_to '', "https://www.google.com.np/search?q=#{sg["flight"]["carrier"]}-#{sg["flight"]["number"]}", class: "fa fa-info-circle", target: :_blank %>
+                  </p>
+
                   <p> Origin: <%= "#{location_detail(@trip_data, l["origin"])}" %> </p>
                   <p> Departure Time: <%= l["departureTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
                   <p> Origin Terminal: <%= l["originTerminal"] %> </p>
