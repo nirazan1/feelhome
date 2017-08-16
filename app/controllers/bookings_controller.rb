@@ -116,17 +116,24 @@ class BookingsController < ApplicationController
   def search
     @user = User.new
     @booking = Booking.new
-    @response = HTTParty.post("https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyBjVK8xezhFNYx-aJSRJiPIJi8ecMqNKpY",
-      {
-        :body => search_body.to_json,
-        :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
-      })
-    if @response&.success?
-      @response = @response["trips"]["tripOption"]
-      redirect_to new_user_session_path, alert: 'no data found !' if @response.blank?
+    if Rails.env.development?
+      response = Qpx.sample_response.with_indifferent_access
+      @trip_data = response["trips"]["data"]
+      @trip_option = response["trips"]["tripOption"]
+      redirect_to new_user_session_path, alert: 'no data found !' if response.blank?
     else
-      redirect_to new_user_session_path, alert: @response.dig(:error) || '404 not found !'
-      # render :json => { :errors => @response["error"] }
+      response = HTTParty.post("https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyBjVK8xezhFNYx-aJSRJiPIJi8ecMqNKpY",
+        {
+          :body => search_body.to_json,
+          :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
+        })
+      if response&.success?
+        @trip_data = response["trips"]["data"]
+        @trip_option = response["trips"]["tripOption"]
+        redirect_to new_user_session_path, alert: 'no data found !' if response.blank?
+      else
+        redirect_to new_user_session_path, alert: @response.dig(:error) || '404 not found !'
+      end
     end
   end
 
@@ -166,6 +173,7 @@ class BookingsController < ApplicationController
   end
 
   def check_user_email
+    return if params[:flight_data].present?
     if params[:flight_data].nil? && booking_params[:user_id].blank? && user_params[:email].blank?
       redirect_to (:back), alert: "User Email Cannot Be Blank ! If you dont have user's email use <user name>@mailinator.com. e.g. actionaid@mailinator.com"
     elsif booking_params[:user_id].blank? && User.find_by(email: user_params[:email])
@@ -175,9 +183,11 @@ class BookingsController < ApplicationController
 
   private
   def booking_params
-    params.require(:booking).permit(:notes, :airline, :origin, :destination,
+    if params[:booking].present?
+      params.require(:booking).permit(:notes, :airline, :origin, :destination,
      :flight_time, :flght_number, :pnr, :ticket_number, :ticket_time_limit,
      :bill_number, :currency, :amount, :recipt_number, :ticket_type, :agent_id, :user_id, :trip_option, :passengers)
+    end
   end
 
   def user_params
