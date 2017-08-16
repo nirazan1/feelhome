@@ -19,7 +19,7 @@
         <div class="col-md-12 col-md-offset-2">
           <% sg["leg"].each do |l| %>
             <div class="col-md-6">
-              <p>Flight: <%= "#{sg["flight"]["carrier"]} #{sg["flight"]["number"]}" %></p>
+              <p> Flight: <%= "#{sg["flight"]["carrier"]} #{sg["flight"]["number"]}" %></p>
               <p> Origin: <%= l["origin"] %> </p>
               <p> Departure Time: <%= l["departureTime"].to_time.strftime('%A, %d %b %Y %l:%M %p') %> </p>
               <p> Origin Terminal: <%= l["originTerminal"] %> </p>
@@ -32,7 +32,7 @@
               <p> Destination Terminal: <%= l["destinationTerminal"] %> </p>
             </div>
           <% end %>
-          <% if sg["connectionDuration"].to_i > 0 %>
+          <% if sg["connectionDuration"].to_i.positive? %>
             <p>Transit Duration: <%= formatted_duration(sg["connectionDuration"])%></p>
           <% end %>
           <hr></hr>
