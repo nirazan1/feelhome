@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def check_email
-    user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:email]&.downcase)
     if user.nil?
       render json: {}, status: 200
     else
